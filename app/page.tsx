@@ -19,7 +19,7 @@ export default async function HomePage() {
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-20 px-4">
         <div className="mx-auto max-w-4xl text-center">
           <div className="flex justify-center mb-8">
-            <Image src="/ocudu_color.svg" alt="OCUDU" height={64} width={409} priority />
+            <Image src="/mm_logo.png" alt="Matchmaker" height={100} width={260} priority />
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             Where Research Meets{" "}

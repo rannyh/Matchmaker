@@ -69,7 +69,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <Image src="/ocudu_color.svg" alt="OCUDU" height={28} width={179} priority />
+            <Image src="/mm_logo.png" alt="Matchmaker" height={40} width={104} priority />
           </Link>
 
           {/* Desktop Nav */}

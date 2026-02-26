@@ -41,7 +41,7 @@ export function LoginForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
         <div className="flex justify-center mb-4">
-          <Image src="/ocudu_color.svg" alt="OCUDU" height={36} width={230} priority />
+          <Image src="/mm_logo.png" alt="Matchmaker" height={60} width={156} priority />
         </div>
         <CardTitle className="text-2xl">Welcome back</CardTitle>
         <CardDescription>Log in to your account</CardDescription>

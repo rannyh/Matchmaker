@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div>
             <div className="mb-3">
-              <Image src="/ocudu_color.svg" alt="OCUDU" height={24} width={153} />
+              <Image src="/mm_logo.png" alt="Matchmaker" height={36} width={94} />
             </div>
             <p className="text-sm text-muted-foreground">
               Connecting academic researchers with industry to advance open source.
