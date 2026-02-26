@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -6,9 +7,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div>
-            <div className="flex items-center gap-2 font-bold text-lg mb-2">
-              <span>🔬</span>
-              <span>Matchmaker</span>
+            <div className="mb-3">
+              <Image src="/ocudu_color.svg" alt="OCUDU" height={24} width={153} />
             </div>
             <p className="text-sm text-muted-foreground">
               Connecting academic researchers with industry to advance open source.
@@ -32,7 +32,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Matchmaker. Built for the research community.
+          © {new Date().getFullYear()} OCUDU. Built for the research community.
         </div>
       </div>
     </footer>

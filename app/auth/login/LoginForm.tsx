@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -39,9 +40,11 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <div className="text-4xl mb-2">🔬</div>
+        <div className="flex justify-center mb-4">
+          <Image src="/ocudu_color.svg" alt="OCUDU" height={36} width={230} priority />
+        </div>
         <CardTitle className="text-2xl">Welcome back</CardTitle>
-        <CardDescription>Log in to your Matchmaker account</CardDescription>
+        <CardDescription>Log in to your account</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">

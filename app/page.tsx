@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, GitFork, Users, BookOpen, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PostCard } from "@/components/posts/PostCard";
@@ -17,7 +18,9 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background py-20 px-4">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="text-6xl mb-6">🔬</div>
+          <div className="flex justify-center mb-8">
+            <Image src="/ocudu_color.svg" alt="OCUDU" height={64} width={409} priority />
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
             Where Research Meets{" "}
             <span className="text-primary">Open Source</span>

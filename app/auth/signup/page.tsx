@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -78,8 +79,10 @@ export default function SignupPage() {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="text-4xl mb-2">🔬</div>
-          <CardTitle className="text-2xl">Join Matchmaker</CardTitle>
+          <div className="flex justify-center mb-4">
+            <Image src="/ocudu_color.svg" alt="OCUDU" height={36} width={230} priority />
+          </div>
+          <CardTitle className="text-2xl">Join OCUDU</CardTitle>
           <CardDescription>Connect with researchers and industry partners</CardDescription>
         </CardHeader>
         <CardContent>

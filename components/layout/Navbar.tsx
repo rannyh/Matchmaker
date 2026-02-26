@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { User, LogOut, LayoutDashboard, PlusCircle, Menu, X, Shield } from "lucide-react";
@@ -67,9 +68,8 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-            <span className="text-2xl">🔬</span>
-            <span className="hidden sm:inline">Matchmaker</span>
+          <Link href="/" className="flex items-center">
+            <Image src="/ocudu_color.svg" alt="OCUDU" height={28} width={179} priority />
           </Link>
 
           {/* Desktop Nav */}
