@@ -67,10 +67,14 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <Image src="/mm_logo.png" alt="Matchmaker" height={40} width={104} priority />
-          </Link>
+          {/* Logos */}
+          <div className="flex items-center gap-4">
+            <Image src="/lf_logo.svg" alt="Linux Foundation" height={32} width={120} priority />
+            <div className="h-8 w-px bg-border" />
+            <Link href="/">
+              <Image src="/mm_logo.png" alt="Matchmaker" height={40} width={104} priority />
+            </Link>
+          </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
