@@ -31,7 +31,7 @@ export function PostForm({ post, authorId }: PostFormProps) {
     timeline: post?.timeline ?? "",
     has_funding: post?.has_funding ?? false,
     funding_details: post?.funding_details ?? "",
-    open_source_project: post?.open_source_project ?? "",
+    open_source_project: post?.open_source_project ?? "OCUDU",
     status: post?.status ?? ("open" as PostStatus),
   });
   const [loading, setLoading] = useState(false);
