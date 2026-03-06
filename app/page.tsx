@@ -115,7 +115,7 @@ export default async function HomePage() {
             Join the community connecting academia and industry through open source.
           </p>
           <Button size="lg" variant="secondary" asChild>
-            <Link href="/auth/signup">Get Started for Free</Link>
+            <Link href="/auth/signup">Start Collaborating</Link>
           </Button>
         </div>
       </section>
