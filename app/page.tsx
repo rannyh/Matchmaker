@@ -22,8 +22,8 @@ export default async function HomePage() {
             <Image src="/mm_logo.png" alt="Matchmaker" height={100} width={260} priority />
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            Where Research Meets{" "}
-            <span className="text-primary">Open Source</span>
+            Where researchers and industry collaborate with{" "}
+            <span className="text-primary">open source software</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Connect academic researchers with industry partners to collaborate on
