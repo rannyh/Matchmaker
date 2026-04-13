@@ -31,6 +31,8 @@ export interface Post {
   created_at: string;
   updated_at: string;
   author?: Profile;
+  researcher_star_count?: number;
+  industry_star_count?: number;
 }
 
 export interface Collaboration {
@@ -54,10 +56,19 @@ export interface Comment {
   author?: Profile;
 }
 
+export interface PostStar {
+  id: string;
+  post_id: string;
+  user_id: string;
+  created_at: string;
+  user?: Profile;
+}
+
 export interface PostWithDetails extends Post {
   author: Profile;
   collaborations: Collaboration[];
   comments: Comment[];
+  stars: PostStar[];
 }
 
 export interface AdminStats {

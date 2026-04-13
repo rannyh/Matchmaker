@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PostStatusBadge } from "@/components/shared/StatusBadge";
 import { CommentThread } from "@/components/posts/CommentThread";
 import { CollaboratorList } from "@/components/posts/CollaboratorList";
+import { StarButton } from "@/components/posts/StarButton";
 import { formatDate } from "@/lib/utils";
 
 interface PostPageProps {
@@ -198,6 +199,16 @@ export default async function PostPage({ params }: PostPageProps) {
                 {post.author.contact_email}
               </a>
             )}
+          </div>
+
+          {/* Stars */}
+          <div className="rounded-xl border p-4">
+            <h3 className="font-semibold text-sm mb-3">Stars</h3>
+            <StarButton
+              postId={post.id}
+              stars={post.stars ?? []}
+              currentUserId={user?.id}
+            />
           </div>
 
           {/* Stats */}

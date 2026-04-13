@@ -25,7 +25,7 @@ export async function getPosts(opts?: {
   const supabase = await createServerClient();
   let query = supabase
     .from("posts")
-    .select("*, author:profiles(*)")
+    .select("*, author:profiles(*), post_stars(user_id, user:profiles(role))")
     .order("created_at", { ascending: false });
 
   if (opts?.search) {
@@ -46,7 +46,12 @@ export async function getPosts(opts?: {
 
   const { data, error } = await query;
   if (error) throw error;
-  return data as Post[];
+  return (data ?? []).map((p: any) => ({
+    ...p,
+    researcher_star_count: (p.post_stars ?? []).filter((s: any) => s.user?.role === "researcher").length,
+    industry_star_count: (p.post_stars ?? []).filter((s: any) => s.user?.role === "industry").length,
+    post_stars: undefined,
+  })) as Post[];
 }
 
 export async function getPostById(id: string) {
@@ -54,7 +59,7 @@ export async function getPostById(id: string) {
   const { data, error } = await supabase
     .from("posts")
     .select(
-      "*, author:profiles(*), collaborations(*, user:profiles(*)), comments(*, author:profiles(*))"
+      "*, author:profiles(*), collaborations(*, user:profiles(*)), comments(*, author:profiles(*)), stars:post_stars(*, user:profiles(*))"
     )
     .eq("id", id)
     .single();

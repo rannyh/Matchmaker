@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Tag, DollarSign, Users, Code2 } from "lucide-react";
+import { Calendar, Tag, DollarSign, Users, Code2, Star } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -81,9 +81,19 @@ export function PostCard({ post }: PostCardProps) {
               <span className="text-blue-500" title="Verified">✓</span>
             )}
           </div>
-          <div className="flex items-center gap-1">
-            <Calendar className="h-3 w-3" />
-            <span>{formatRelativeDate(post.created_at)}</span>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1" title="Researcher stars">
+              <Star className="h-3 w-3 fill-blue-400 text-blue-400" />
+              <span>{post.researcher_star_count ?? 0}</span>
+            </div>
+            <div className="flex items-center gap-1" title="Industry stars">
+              <Star className="h-3 w-3 fill-orange-400 text-orange-400" />
+              <span>{post.industry_star_count ?? 0}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Calendar className="h-3 w-3" />
+              <span>{formatRelativeDate(post.created_at)}</span>
+            </div>
           </div>
         </CardFooter>
       </Card>
