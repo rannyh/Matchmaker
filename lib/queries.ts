@@ -20,26 +20,26 @@ async function attachStarCounts(
   const postIds = posts.map((p) => p.id);
   if (postIds.length === 0) return;
 
-  const { data: stars } = await supabase
+  const { data: stars, error: starsError } = await supabase
     .from("post_stars")
     .select("post_id, user_id")
     .in("post_id", postIds);
 
-  if (!stars || stars.length === 0) return;
+  if (starsError || !stars || stars.length === 0) return;
 
-  const userIds = [...new Set(stars.map((s) => s.user_id))];
+  const userIds = [...new Set((stars as any[]).map((s) => s.user_id))];
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, role")
     .in("id", userIds);
 
   const roleMap = new Map<string, string>();
-  for (const p of profiles ?? []) {
+  for (const p of (profiles ?? []) as any[]) {
     if (p.role) roleMap.set(p.id, p.role);
   }
 
   const countMap = new Map<string, { researcher: number; industry: number }>();
-  for (const s of stars) {
+  for (const s of stars as any[]) {
     const entry = countMap.get(s.post_id) ?? { researcher: 0, industry: 0 };
     const role = roleMap.get(s.user_id);
     if (role === "researcher") entry.researcher++;
