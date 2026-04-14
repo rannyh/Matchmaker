@@ -101,7 +101,37 @@ export async function getPostsByAuthor(authorId: string) {
     .eq("author_id", authorId)
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return data as Post[];
+
+  const posts = (data ?? []) as Post[];
+
+  try {
+    const postIds = posts.map((p) => p.id);
+    if (postIds.length > 0) {
+      const { data: stars } = await supabase
+        .from("post_stars")
+        .select("post_id, user_id, user:profiles(role)")
+        .in("post_id", postIds);
+
+      if (stars) {
+        const countMap = new Map<string, { researcher: number; industry: number }>();
+        for (const s of stars as any[]) {
+          const entry = countMap.get(s.post_id) ?? { researcher: 0, industry: 0 };
+          if (s.user?.role === "researcher") entry.researcher++;
+          else if (s.user?.role === "industry") entry.industry++;
+          countMap.set(s.post_id, entry);
+        }
+        for (const post of posts) {
+          const counts = countMap.get(post.id);
+          post.researcher_star_count = counts?.researcher ?? 0;
+          post.industry_star_count = counts?.industry ?? 0;
+        }
+      }
+    }
+  } catch {
+    // post_stars table not yet created — star counts will be 0
+  }
+
+  return posts;
 }
 
 // ── Profiles ─────────────────────────────────────────────────────────────────

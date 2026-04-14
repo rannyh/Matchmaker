@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ interface StarButtonProps {
 }
 
 export function StarButton({ postId, stars, currentUserId }: StarButtonProps) {
+  const router = useRouter();
   const [localStars, setLocalStars] = useState<PostStar[]>(stars);
   const [loading, setLoading] = useState(false);
   const [showList, setShowList] = useState(false);
@@ -46,6 +48,7 @@ export function StarButton({ postId, stars, currentUserId }: StarButtonProps) {
       } else {
         setLocalStars((prev) => prev.filter((s) => s.user_id !== currentUserId));
       }
+      router.refresh();
     } finally {
       setLoading(false);
     }
