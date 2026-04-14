@@ -10,6 +10,50 @@ import type {
   AdminStats,
 } from "./types";
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+/** Attach researcher_star_count / industry_star_count to an array of posts. */
+async function attachStarCounts(
+  supabase: Awaited<ReturnType<typeof createServerClient>>,
+  posts: Post[]
+): Promise<void> {
+  const postIds = posts.map((p) => p.id);
+  if (postIds.length === 0) return;
+
+  const { data: stars } = await supabase
+    .from("post_stars")
+    .select("post_id, user_id")
+    .in("post_id", postIds);
+
+  if (!stars || stars.length === 0) return;
+
+  const userIds = [...new Set(stars.map((s) => s.user_id))];
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, role")
+    .in("id", userIds);
+
+  const roleMap = new Map<string, string>();
+  for (const p of profiles ?? []) {
+    if (p.role) roleMap.set(p.id, p.role);
+  }
+
+  const countMap = new Map<string, { researcher: number; industry: number }>();
+  for (const s of stars) {
+    const entry = countMap.get(s.post_id) ?? { researcher: 0, industry: 0 };
+    const role = roleMap.get(s.user_id);
+    if (role === "researcher") entry.researcher++;
+    else if (role === "industry") entry.industry++;
+    countMap.set(s.post_id, entry);
+  }
+
+  for (const post of posts) {
+    const counts = countMap.get(post.id);
+    post.researcher_star_count = counts?.researcher ?? 0;
+    post.industry_star_count = counts?.industry ?? 0;
+  }
+}
+
 // ── Posts ────────────────────────────────────────────────────────────────────
 
 export async function getPosts(opts?: {
@@ -51,28 +95,7 @@ export async function getPosts(opts?: {
 
   // Fetch star counts separately — gracefully skip if migration hasn't been run yet
   try {
-    const postIds = posts.map((p) => p.id);
-    if (postIds.length > 0) {
-      const { data: stars } = await supabase
-        .from("post_stars")
-        .select("post_id, user_id, user:profiles(role)")
-        .in("post_id", postIds);
-
-      if (stars) {
-        const countMap = new Map<string, { researcher: number; industry: number }>();
-        for (const s of stars as any[]) {
-          const entry = countMap.get(s.post_id) ?? { researcher: 0, industry: 0 };
-          if (s.user?.role === "researcher") entry.researcher++;
-          else if (s.user?.role === "industry") entry.industry++;
-          countMap.set(s.post_id, entry);
-        }
-        for (const post of posts) {
-          const counts = countMap.get(post.id);
-          post.researcher_star_count = counts?.researcher ?? 0;
-          post.industry_star_count = counts?.industry ?? 0;
-        }
-      }
-    }
+    await attachStarCounts(supabase, posts);
   } catch {
     // post_stars table not yet created — star counts will be 0
   }
@@ -105,28 +128,7 @@ export async function getPostsByAuthor(authorId: string) {
   const posts = (data ?? []) as Post[];
 
   try {
-    const postIds = posts.map((p) => p.id);
-    if (postIds.length > 0) {
-      const { data: stars } = await supabase
-        .from("post_stars")
-        .select("post_id, user_id, user:profiles(role)")
-        .in("post_id", postIds);
-
-      if (stars) {
-        const countMap = new Map<string, { researcher: number; industry: number }>();
-        for (const s of stars as any[]) {
-          const entry = countMap.get(s.post_id) ?? { researcher: 0, industry: 0 };
-          if (s.user?.role === "researcher") entry.researcher++;
-          else if (s.user?.role === "industry") entry.industry++;
-          countMap.set(s.post_id, entry);
-        }
-        for (const post of posts) {
-          const counts = countMap.get(post.id);
-          post.researcher_star_count = counts?.researcher ?? 0;
-          post.industry_star_count = counts?.industry ?? 0;
-        }
-      }
-    }
+    await attachStarCounts(supabase, posts);
   } catch {
     // post_stars table not yet created — star counts will be 0
   }
